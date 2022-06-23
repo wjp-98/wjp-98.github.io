@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.slideshow {
+    height: 460px;
+}
+
+.slideshow .container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 图片列表 */
+.slideshow .pic-list {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.slideshow .pic-list>li {
+    flex-shrink: 0;
+    width: 1200px;
+    height: 100%;
+    text-align: center;
+}
+.slideshow .pic-list img {
+    height: 100%;
+    vertical-align: bottom;
+    border-radius: 8px;
+}
+
+/* 图片控制器 */
+.slideshow .pic-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 焦点控制器 */
+.slideshow .focus {
+    display: flex;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    padding: 0;
+    margin: 0;
+    transform: translateX(-50%);
+    list-style: none;
+}
+.slideshow .focus>.current {
+    transform: scale(1.2);
+    opacity: 1;
+}
+.slideshow .focus>li {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    border: 3px solid #999;
+    transition: all .3s;
+    opacity: .5;
+}
+.slideshow .focus>li+li {
+    margin-left: 10px;
+}
+
+/* 前后控制器 */
+.slideshow .pic-controls>div {
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 100px;
+    background: #333;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    opacity: .5;
+}
+.slideshow .pic-controls>div::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    width: 20px;
+    height: 20px;
+    border: 4px solid transparent;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    transform: translateY(-50%) rotate(-45deg);
+}
+.slideshow .prev {
+    left: 10px;
+    transform: translateY(-50%);
+}
+.slideshow .next {
+    right: 10px;
+    transform: translateY(-50%) rotate(180deg);
+}
