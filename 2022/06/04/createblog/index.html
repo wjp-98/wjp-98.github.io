@@ -15,7 +15,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"b2t":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"b2t":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="一直想搭建一个个人博客，由于种种原因没有动手。恰好这个端午节放假，下雨又遇见各地疫情不能出去嗨，闲着无聊也是无聊，想着不如把博客搞了吧。于是就这样开始。 起初以为搭建博客跟做网页一样呢，需要前后端环境以及部署环境，然后我就在网上逛了一下，看看大家都是如何开发博客的，才发现原来有很多现成的博客模板以及脚手架，大致看了一下，有各种语言开发的。由于我个人对node熟悉一点以及网上hexo的资料多一点，对">
@@ -77,6 +77,27 @@
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=d&c=h&c=j')
+    .then(function (res){
+      return res.json();
+    })
+    .then(function (data) {
+           var poem = document.getElementById('poem');
+           var info = document.getElementById('info');
+           poem.innerHTML=data.hitokoto;
+           info.innerHTML=data.creator + '&emsp;Form&emsp;' + data.from 
+      console.log(data,poem,info)
+
+    })
+    .catch(function (err) {
+      console.error(err);
+    })
+</script>
 
 </head>
 
@@ -294,6 +315,26 @@
     
     
     
+        <div class="reward-container">
+  <div>创作不易，有帮助可点击打赏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wxpay.jpg" alt="WU Jinpeng 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zfbpay.jpg" alt="WU Jinpeng 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -422,6 +463,17 @@
 
     <footer class="footer">
       <div class="footer-inner">
+<div class="poem-wrap">
+    <div class="poem-border poem-left">
+    </div>
+    <div class="poem-border poem-right">
+    </div>
+    <h1>热评</h1>
+    <p id="poem">loading...</p>
+    <p id="info">loading...</p>
+</div>
+
+
         
 
         
