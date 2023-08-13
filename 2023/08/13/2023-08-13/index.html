@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"b2t":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近在使用nest.js和mongodb数据库一起构建node应用,记录下主要步骤。因为在过程中也遇见了一些问题，简单做个记录。 安装nest.js安装node需要注意的是node的版本需要是v16以上，否则在运行nest时会出现node版本不匹配问题。如果不匹配可以使用 nvm或者n工具切换node版本。  安装nest.js 使用npm包形式安装nest脚手架。 12$ npm i -g @n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nest与mongodb构建node服务端应用">
+<meta property="og:url" content="http://example.com/2023/08/13/2023-08-13/index.html">
+<meta property="og:site_name" content="从安的博客">
+<meta property="og:description" content="最近在使用nest.js和mongodb数据库一起构建node应用,记录下主要步骤。因为在过程中也遇见了一些问题，简单做个记录。 安装nest.js安装node需要注意的是node的版本需要是v16以上，否则在运行nest时会出现node版本不匹配问题。如果不匹配可以使用 nvm或者n工具切换node版本。  安装nest.js 使用npm包形式安装nest脚手架。 12$ npm i -g @n">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/2023-08-13/blog-23-08-13-01.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-02.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-03.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-04.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-05.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-06.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-07.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-08.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-07.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-09.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-10.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-11.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-12.png">
+<meta property="og:image" content="http://example.com/image/2023-08-13/08-13-13.png">
+<meta property="article:published_time" content="2023-08-13T01:00:43.034Z">
+<meta property="article:modified_time" content="2023-08-13T03:52:32.970Z">
+<meta property="article:author" content="WU Jinpeng">
+<meta property="article:tag" content="node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/2023-08-13/blog-23-08-13-01.png">
+
+<link rel="canonical" href="http://example.com/2023/08/13/2023-08-13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>nest与mongodb构建node服务端应用 | 从安的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=d&c=h&c=j')
+    .then(function (res){
+      return res.json();
+    })
+    .then(function (data) {
+           var poem = document.getElementById('poem');
+           var info = document.getElementById('info');
+           poem.innerHTML=data.hitokoto;
+           info.innerHTML=data.creator + '&emsp;Form&emsp;' + data.from 
+
+    })
+    .catch(function (err) {
+      console.error(err);
+    })
+</script>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">从安的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一晃两三年，匆匆又夏天</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/13/2023-08-13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WU Jinpeng">
+      <meta itemprop="description" content="从安的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从安的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nest与mongodb构建node服务端应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-13 09:00:43 / 修改时间：11:52:32" itemprop="dateCreated datePublished" datetime="2023-08-13T09:00:43+08:00">2023-08-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/13/2023-08-13/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/13/2023-08-13/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近在使用nest.js和mongodb数据库一起构建node应用,记录下主要步骤。因为在过程中也遇见了一些问题，简单做个记录。</p>
+<h3 id="安装nest-js"><a href="#安装nest-js" class="headerlink" title="安装nest.js"></a>安装nest.js</h3><h4 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h4><p>需要注意的是node的版本需要是v16以上，否则在运行nest时会出现node版本不匹配问题。如果不匹配可以使用 nvm或者n工具切换node版本。<br><img src="/../image/2023-08-13/blog-23-08-13-01.png" alt="node切换"> </p>
+<h4 id="安装nest-js-1"><a href="#安装nest-js-1" class="headerlink" title="安装nest.js"></a>安装nest.js</h4><p> 使用npm包形式安装nest脚手架。<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g @nestjs/cli</span><br><span class="line">$ nest new project-name</span><br></pre></td></tr></table></figure><br> project-name为你创建的项目名<br> 官网还提供了其他的安装方式 <a target="_blank" rel="noopener" href="https://nestjs.bootcss.com/">NestJs中文官网链接</a></p>
+<h3 id="安装Mongodb服务"><a href="#安装Mongodb服务" class="headerlink" title="安装Mongodb服务"></a>安装Mongodb服务</h3><h4 id="前往mongodb官网下载对应的mongo版本"><a href="#前往mongodb官网下载对应的mongo版本" class="headerlink" title="前往mongodb官网下载对应的mongo版本"></a>前往mongodb官网下载对应的mongo版本</h4><p>  <a target="_blank" rel="noopener" href="https://www.mongodb.com/">Mongodb官网</a>,选择产品(Products)-&gt;社区版本(Community Server),企业版要钱社区版免费。<br>  <img src="/../image/2023-08-13/08-13-02.png" alt="下载页面流程"></p>
+<h4 id="选择mongodb服务版本"><a href="#选择mongodb服务版本" class="headerlink" title="选择mongodb服务版本"></a>选择mongodb服务版本</h4><p> 最好选择v5及以上版本<br> <img src="/../image/2023-08-13/08-13-03.png" alt="mpngodb版本"><br> 如果选择版本过低，在与nest链接时，可能会出现版本不匹配提示信息<br> <img src="/../image/2023-08-13/08-13-04.png" alt="版本错误提示"></p>
+<p> 以下是GPT提供的一些分析以及解决办法<br> ‘<br> 这个错误提示表示 MongoDB 驱动程序需要与 MongoDB 服务器上的最低 “wire version” 版本匹配。 “wire version” 是 MongoDB 驱动程序和服务器之间通信所使用的协议版本。错误消息表明您的 MongoDB 驱动程序版本需要至少为 6，但是您的 MongoDB 服务器上的 “wire version” 为 4，这会导致不兼容问题。</p>
+<p>为了解决这个问题，您需要升级 MongoDB 驱动程序（Node.js 驱动程序）版本或降低 MongoDB 服务器版本，以便它们之间的 “wire version” 匹配。以下是一些可能的解决方案：</p>
+<p>·升级 MongoDB 驱动程序：<br> 您可以尝试升级 MongoDB Node.js 驱动程序（mongodb 包）的版本到符合 MongoDB 服务器的要求。在您的项目中使用最新的 MongoDB Node.js 驱动程序版本可能会解决兼容性问题。</p>
+<p>·降低 MongoDB 服务器版本：<br> 如果您无法升级 MongoDB Node.js 驱动程序，您可以尝试将 MongoDB 服务器版本降级到与驱动程序版本兼容的版本。这可能需要升级或降级 MongoDB 服务器实例，具体取决于您的需求和部署环境。</p>
+<p>·查看 MongoDB 服务器兼容性：<br> 检查您的 MongoDB 服务器版本是否支持所使用的 MongoDB Node.js 驱动程序版本。确保两者之间的 “wire version” 兼容。<br> ‘<br> <span id="more"></span><br> 所以我选择了升高mongodb服务的版本<br>如果使用的是v6以上版本,我在实际安装中发现安装包的bin文件夹下缺少mongo.exe文件,在后续使用 mongo Shell时会报错<br>“‘mongo’ 不是内部或外部命令，也不是可运行的程序或批处理文件。”<br>出现这个问题时可以先检查环境变量是否配置有问题。后来发现是安装包bin文件下缺少执行文件,后来简单方法就是调整版本至v5。</p>
+<h4 id="安装数据包服务"><a href="#安装数据包服务" class="headerlink" title="安装数据包服务"></a>安装数据包服务</h4><p>点击下载的msi包，依次安装就行。安装完毕后在bin文件同级目录下创建data文件，并在data文件下新建db和log文件(log没有的话需要创建)，分别存放数据库表和打印的日志信息。</p>
+<h5 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h5><p> 搜索高级系统设置-&gt;点击高级-&gt;点击环境变量-&gt;找到系统变量-&gt;点击Path并点击编辑-&gt;点击新建并将bin文件的路径复制进去-&gt;依次点击确认就完成系统变量的配置<br>  <img src="/../image/2023-08-13/08-13-05.png" alt="配置系统环境变量"><br>  <img src="/../image/2023-08-13/08-13-06.png" alt="配置系统环境变量"></p>
+<h5 id="启动mongodb"><a href="#启动mongodb" class="headerlink" title="启动mongodb"></a>启动mongodb</h5><p>进入命令编辑模式 win+r或者在搜索中输入cmd进入命令行模式，进入mongodb包中新建的db文件夹，运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod  --dbpath D:\Mongodb\Server\data\db &lt;后面为db文件夹目录&gt;</span><br></pre></td></tr></table></figure>
+<p>执行完毕后在浏览器输入：localhost:27017 (服务端口一般为27017)<br>显示如下结果说明安装成功<br>  <img src="/../image/2023-08-13/08-13-07.png" alt="服务执行结果"></p>
+<h5 id="配置开机自启动"><a href="#配置开机自启动" class="headerlink" title="配置开机自启动"></a>配置开机自启动</h5><ol>
+<li><p>在项目文件的根目录中新建文件mongo.config，并输入</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> #数据库数据存放目录</span><br><span class="line">dbpath=D:\mongodb\data\db</span><br><span class="line">#数据库日志存放目录</span><br><span class="line">logpath=D:\mongodb\log\mongod.log</span><br><span class="line">#以追加的方式记录日志</span><br><span class="line">logappend = true</span><br><span class="line">#端口号 默认为 27017</span><br><span class="line">port=27017</span><br><span class="line"> </span><br><span class="line">#开启用户认证</span><br><span class="line">auth=false</span><br><span class="line">#mongodb所绑定的ip地址，绑定后只能通过127访问</span><br><span class="line">bind_ip = 0.0.0.0</span><br><span class="line"> </span><br><span class="line">#启用日志，默认启用</span><br><span class="line">journal=true</span><br><span class="line">#过滤掉一些无用的日志信息，若需要调试使用请设置为false</span><br><span class="line">quiet=true</span><br><span class="line">#不允许全表扫描</span><br><span class="line">notablescan=false</span><br></pre></td></tr></table></figure>
+<p> dbpath&#x3D;D:\mongodb\data\db<br> logpath&#x3D;D:\mongodb\log\mongod.log<br> 修改为自己的实际目录地址</p>
+</li>
+<li><p>以管理员权限打开命令控制后台执行命令(命令中路径需换成项目的实际路径)<br> <img src="/../image/2023-08-13/08-13-08.png" alt="启动自启动服务"><br>  同样在浏览器中输入 <a target="_blank" rel="noopener" href="http://localhost:27017/">http://localhost:27017</a> 出现图片字符说明启动成功，以后开机会自启动数据库服务。<br> <img src="/../image/2023-08-13/08-13-07.png" alt="服务执行结果"></p>
+</li>
+<li><p>启动 MongoDB 命令为：net start MongoDB<br>关闭 MongoDB 命令为：net stop MongoDB</p>
+</li>
+</ol>
+<h3 id="nest访问mongodb数据库"><a href="#nest访问mongodb数据库" class="headerlink" title="nest访问mongodb数据库"></a>nest访问mongodb数据库</h3><ol>
+<li><p>在命令行中输入mongo打开 Mongo shell<br> <img src="/../image/2023-08-13/08-13-09.png" alt="服务执行结果"></p>
+</li>
+<li><p>继续运行命令完成查看数据库，新增数据库，修改数据库权限用户密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">show dbs  //查看当前数据库</span><br><span class="line">use &lt;你的数据库名称&gt; //如果该数据库存在就会切换，如果没有就会新增且切换为当前数据库</span><br><span class="line"></span><br><span class="line">db.createUser(&#123;</span><br><span class="line">...   user: &quot;xxxxxx&quot;, //设置账号</span><br><span class="line">...   pwd: &quot;xxxxxxx&quot;,  //设置密码</span><br><span class="line">...   roles: [</span><br><span class="line">...     &#123; role: &quot;readWrite&quot;, db: &lt;数据库名称&gt;&#125;,</span><br><span class="line">...     &#123; role: &quot;dbAdmin&quot;, db: &lt;数据库名称&gt;&#125;,</span><br><span class="line">...   ]</span><br><span class="line">... &#125;)  //为数据库设置用户密码</span><br><span class="line"></span><br><span class="line">db.changeUserPassword(&lt;账号&gt;, &quot;newPassword&quot;) //修改密码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以上我们就在mongodb中新增了一个数据库，于是我们可以在nest中关联到mongodb数据库，并在nest声明表以及逻辑。</p>
+</li>
+<li><p>在nest中安装mongodb服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @nestjs/mongoose mongoose</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在nest的入口出关联你的数据库地址,以创建一个User数据库为例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.module.ts</span><br><span class="line"></span><br><span class="line">import &#123; Module &#125; from &#x27;@nestjs/common&#x27;;</span><br><span class="line">import &#123; MongooseModule &#125; from &#x27;@nestjs/mongoose&#x27;;</span><br><span class="line">import &#123; UserModule &#125; from &#x27;./mongodb/user/user.module&#x27;;</span><br><span class="line"></span><br><span class="line">@Module(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    MongooseModule.forRoot(&#x27;mongodb://&lt;数据库账号&gt;:&lt;数据库密码&gt;@localhost:27017/&lt;数据库名称&gt;&#x27;),</span><br><span class="line">    UserModule,</span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br><span class="line">export class AppModule &#123;&#125;</span><br><span class="line"></span><br><span class="line">//注意数据库名称密码尽量不要使用 @ 。可能会导致格式问题</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动nest服务<br>在nest中建表并声明表字段(相关代码省略)，然后运行node服务<br> <img src="/../image/2023-08-13/08-13-10.png" alt="服务执行结果"><br> 如图为执行成功,然后使用postman进行接口测试。<br> <img src="/../image/2023-08-13/08-13-11.png" alt="服务执行结果"><br> 接口成功返回了我们新增的数据，然后我们可以使用mongo可视化工具(robo 3t 或者 Studio 3t)查看我们新增数据是否落表成功。<br> <img src="/../image/2023-08-13/08-13-12.png" alt="服务执行结果"><br> 数据落表成功。</p>
+</li>
+</ol>
+<p> <img src="/../image/2023-08-13/08-13-13.png" alt="结束"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>创作不易，有帮助可点击打赏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wxpay.jpg" alt="WU Jinpeng 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/zfbpay.jpg" alt="WU Jinpeng 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node/" rel="tag"># node</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/09/2023-08-09/" rel="prev" title="点击事件单双击判断">
+      <i class="fa fa-chevron-left"></i> 点击事件单双击判断
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nest-js"><span class="nav-number">1.</span> <span class="nav-text">安装nest.js</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85node"><span class="nav-number">1.1.</span> <span class="nav-text">安装node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nest-js-1"><span class="nav-number">1.2.</span> <span class="nav-text">安装nest.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Mongodb%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">安装Mongodb服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%BE%80mongodb%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%AF%B9%E5%BA%94%E7%9A%84mongo%E7%89%88%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">前往mongodb官网下载对应的mongo版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9mongodb%E6%9C%8D%E5%8A%A1%E7%89%88%E6%9C%AC"><span class="nav-number">2.2.</span> <span class="nav-text">选择mongodb服务版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%95%B0%E6%8D%AE%E5%8C%85%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.3.</span> <span class="nav-text">安装数据包服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.1.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8mongodb"><span class="nav-number">2.3.2.</span> <span class="nav-text">启动mongodb</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">2.3.3.</span> <span class="nav-text">配置开机自启动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nest%E8%AE%BF%E9%97%AEmongodb%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">nest访问mongodb数据库</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WU Jinpeng"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">WU Jinpeng</p>
+  <div class="site-description" itemprop="description">从安的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+<div class="poem-wrap">
+    <div class="poem-border poem-left">
+    </div>
+    <div class="poem-border poem-right">
+    </div>
+    <h1>热评</h1>
+    <p id="poem">loading...</p>
+    <p id="info">loading...</p>
+</div>
+
+
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJP@HD</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">14k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    <div>
+       <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">备案号: 浙ICP备2022017821号</a> 
+    </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'dpkv73opdrOSOQBFkQu7spUK-gzGzoHsz',
+      appKey     : 'pnPLs8ecgR7m1NURQ66DzCOQ',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
