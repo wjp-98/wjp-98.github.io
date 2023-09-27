@@ -182,102 +182,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/27/2023-09-27/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WU Jinpeng">
-      <meta itemprop="description" content="从安的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="从安的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/27/2023-09-27/" class="post-title-link" itemprop="url">拉拽方框伸缩大小</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-09-27 19:19:31 / 修改时间：19:37:41" itemprop="dateCreated datePublished" datetime="2023-09-27T19:19:31+08:00">2023-09-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/27/2023-09-27/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/27/2023-09-27/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>马上就是十一假日，今天公司的同学很多都已经请假走了。于是其他人的心也都飞了。下午又在刷帖子，看见了一个方框伸缩的效果，想着无聊就自己写一下。<br>在写这个效果的时候顺便复习了一下，鼠标的点击移动效果。其实代码很好理解。在外部盒子中套8个小块，分别定位在大盒子的四周边框上。在挪动小块时，使盒子的对应边框随之移动，关键是要随之增加盒子的对应宽度或者高度</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot; id=&quot;box&quot;&gt;</span><br><span class="line">        &lt;!-- 上左 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div left-top&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 上中 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div top-middle&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 上右 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div top-right&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 中左 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div left-middle&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 中右 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div right-middle&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 下左 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div left-bottom&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 下中 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div middle-bottom&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">        &lt;!-- 下右 --&gt;</span><br><span class="line">        &lt;div class=&quot;zoom-div right-bottom&quot; draggable&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    document.addEventListener(&#x27;DOMContentLoaded&#x27;, function () &#123;</span><br><span class="line">        const box = document.getElementById(&#x27;box&#x27;);</span><br><span class="line">        const zoomList = document.getElementsByClassName(&#x27;zoom-div&#x27;);</span><br><span class="line">        let startPoint = &#123;</span><br><span class="line">            x: 0,</span><br><span class="line">            y: 0,</span><br><span class="line">        &#125;;</span><br><span class="line">        let movePoint = &#123;</span><br><span class="line">            x: 0,</span><br><span class="line">            y: 0,</span><br><span class="line">        &#125;</span><br><span class="line">        let currentDom;</span><br><span class="line">        let boxWidth = box.offsetWidth;</span><br><span class="line">        let boxHeight = box.offsetHeight;</span><br><span class="line"></span><br><span class="line">        document.addEventListener(&#x27;mousedown&#x27;, function (e) &#123;</span><br><span class="line">            if (!Array.from(zoomList).includes(e.target)) return;</span><br><span class="line">            currentDom = e.target;</span><br><span class="line">            startPoint.x = e.clientX;</span><br><span class="line">            startPoint.y = e.clientY;</span><br><span class="line">            document.addEventListener(&#x27;mousemove&#x27;, drag);</span><br><span class="line">            document.addEventListener(&#x27;mouseup&#x27;, dragEnd);</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        const drag = (event) =&gt; &#123;</span><br><span class="line">            let moveX = event.clientX - startPoint.x; //左右 正为向右负为左; 上下 上为负下为正</span><br><span class="line">            let moveY = event.clientY - startPoint.y;</span><br><span class="line">            movePoint.x = event.clientX;</span><br><span class="line">            movePoint.y = event.clientY;</span><br><span class="line"></span><br><span class="line">            const currentDomClassStr = currentDom.getAttribute(&#x27;class&#x27;);</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;left-middle&#x27;)) &#123; //中左</span><br><span class="line">                box.style.left = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                console.log(moveX)</span><br><span class="line">                box.style.width = `$&#123;-moveX + boxWidth&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;left-top&#x27;)) &#123; //上左</span><br><span class="line">                box.style.left = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                box.style.top = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.width = `$&#123;-moveX + boxWidth&#125;px`</span><br><span class="line">                box.style.height = `$&#123;-moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;top-middle&#x27;)) &#123; //上中</span><br><span class="line">                box.style.top = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.height = `$&#123;-moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;top-right&#x27;)) &#123; //上右</span><br><span class="line">                box.style.right = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                box.style.top = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.width = `$&#123;moveX + boxWidth&#125;px`</span><br><span class="line">                box.style.height = `$&#123;-moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;right-middle&#x27;)) &#123; //上右</span><br><span class="line">                box.style.right = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                box.style.width = `$&#123;moveX + boxWidth&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;left-bottom&#x27;)) &#123; //下左</span><br><span class="line">                box.style.left = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                box.style.bottom = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.width = `$&#123;-moveX + boxWidth&#125;px`</span><br><span class="line">                box.style.height = `$&#123;moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;middle-bottom&#x27;)) &#123; //下左</span><br><span class="line">                box.style.bottom = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.height = `$&#123;moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentDomClassStr.includes(&#x27;right-bottom&#x27;)) &#123; //下左</span><br><span class="line">                box.style.right = `$&#123;event.clientX&#125;px`;</span><br><span class="line">                box.style.bottom = `$&#123;event.clientY&#125;px`;</span><br><span class="line">                box.style.width = `$&#123;moveX + boxWidth&#125;px`</span><br><span class="line">                box.style.height = `$&#123;moveY + boxHeight&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        const dragEnd = (event) =&gt; &#123;</span><br><span class="line">            boxWidth = box.offsetWidth;</span><br><span class="line">            boxHeight = box.offsetHeight;</span><br><span class="line">            document.removeEventListener(&#x27;mousemove&#x27;, drag);</span><br><span class="line">            document.removeEventListener(&#x27;mouseup&#x27;, dragEnd);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    body &#123;</span><br><span class="line">        position: relative;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .box &#123;</span><br><span class="line">        position: absolute;</span><br><span class="line">        top: 100px;</span><br><span class="line">        left: 200px;</span><br><span class="line">        border: 1px solid rgb(150, 147, 147);</span><br><span class="line">        width: 300px;</span><br><span class="line">        height: 300px;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .zoom-div &#123;</span><br><span class="line">        position: absolute;</span><br><span class="line">        width: 6px;</span><br><span class="line">        height: 6px;</span><br><span class="line">        border: 1px solid rgb(30, 29, 29);</span><br><span class="line">        background: rgb(30, 29, 29);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .left-top &#123;</span><br><span class="line">        left: -3px;</span><br><span class="line">        top: -3px;</span><br><span class="line">        cursor: nw-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .top-middle &#123;</span><br><span class="line">        left: calc(50% - 3px);</span><br><span class="line">        top: -5px;</span><br><span class="line">        cursor: n-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .top-right &#123;</span><br><span class="line">        left: calc(100% - 4px);</span><br><span class="line">        top: -4px;</span><br><span class="line">        cursor: ne-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .left-middle &#123;</span><br><span class="line">        top: 50%;</span><br><span class="line">        left: -5px;</span><br><span class="line">        cursor: w-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .right-middle &#123;</span><br><span class="line">        top: 50%;</span><br><span class="line">        left: calc(100% - 3px);</span><br><span class="line">        cursor: e-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .left-bottom &#123;</span><br><span class="line">        top: calc(100% - 3px);</span><br><span class="line">        left: -4px;</span><br><span class="line">        cursor: sw-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .middle-bottom &#123;</span><br><span class="line">        top: calc(100% - 3px);</span><br><span class="line">        left: calc(50% - 3px);</span><br><span class="line">        cursor: s-resize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .right-bottom &#123;</span><br><span class="line">        top: calc(100% - 3px);</span><br><span class="line">        left: calc(100% - 3px);</span><br><span class="line">        cursor: se-resize;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/26/2023-09-26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -292,7 +196,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/09/26/2023-09-26/" class="post-title-link" itemprop="url">打字机效果</a>
+            <a href="/2023/09/26/2023-09-26/" class="post-title-link" itemprop="url">打字机效果和拉拽方框伸缩</a>
         </h2>
 
         <div class="post-meta">
@@ -301,10 +205,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-09-26 21:43:34 / 修改时间：21:55:23" itemprop="dateCreated datePublished" datetime="2023-09-26T21:43:34+08:00">2023-09-26</time>
+              <time title="创建时间：2023-09-26 21:43:34" itemprop="dateCreated datePublished" datetime="2023-09-26T21:43:34+08:00">2023-09-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-27 20:13:18" itemprop="dateModified" datetime="2023-09-27T20:13:18+08:00">2023-09-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -335,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -354,8 +264,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今年最火的应该就是chatGpt,在chatgpt显示答案时，会有打字机效果，会将自己的答案以单个字的形式呈现在页面上。在上班摸鱼时，简单的写了一下当做自己联系。主要是使用css中animation进行实现的。</p>
+          <h4 id="打字机效果"><a href="#打字机效果" class="headerlink" title="打字机效果"></a>打字机效果</h4><p>今年最火的应该就是chatGpt,在chatgpt显示答案时，会有打字机效果，会将自己的答案以单个字的形式呈现在页面上。在上班摸鱼时，简单的写了一下当做自己联系。主要是使用css中animation进行实现的。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;box-input&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;box-line&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;button id=&quot;button&quot;&gt;打字&lt;/button&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    const showText = &#x27;人生就像一场旅行，有时候你要走的路很长，有时候你要遇到坎坷和曲折，但只要你勇于面对挑战，勇敢前行，你就会发现：人生的旅途是如此美妙而又充满惊喜。&#x27;;</span><br><span class="line">    const button = document.getElementById(&#x27;button&#x27;);</span><br><span class="line">    const boxInput = document.getElementsByClassName(&#x27;box-input&#x27;)[0];</span><br><span class="line">    const boxLine = document.getElementsByClassName(&#x27;box-line&#x27;)[0];</span><br><span class="line">    button.onclick = function () &#123;</span><br><span class="line">        boxLine.style.opacity = 1;</span><br><span class="line">        boxLine.style.animation = &#x27;line 1s infinite&#x27;;</span><br><span class="line">        const textArr = showText.split(&#x27;&#x27;);</span><br><span class="line">        let inputValue = &#x27;&#x27;;</span><br><span class="line">        let currentLogIndex = 0;</span><br><span class="line">        const interval = setInterval(() =&gt; &#123;</span><br><span class="line">            boxLine.style.animation = &#x27;none&#x27;;</span><br><span class="line">            inputValue = inputValue.concat(textArr[currentLogIndex]);</span><br><span class="line">            boxInput.innerHTML = inputValue;</span><br><span class="line">            if (currentLogIndex &gt;= textArr.length - 1) &#123;</span><br><span class="line">                boxLine.style.animation = &#x27;line 1s infinite&#x27;;</span><br><span class="line">                const timeout = setTimeout(() =&gt; &#123;</span><br><span class="line">                    currentLogIndex = 0;</span><br><span class="line">                    boxLine.style.animation =&#x27;none&#x27;;</span><br><span class="line">                    boxLine.style.opacity = 0;</span><br><span class="line">                    clearTimeout(timeout)</span><br><span class="line">                &#125;, 1000)</span><br><span class="line">                clearInterval(interval);</span><br><span class="line">            &#125;</span><br><span class="line">            currentLogIndex++;</span><br><span class="line"></span><br><span class="line">        &#125;, 150)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .box &#123;</span><br><span class="line">        width: 500px;</span><br><span class="line">        height: 300px;</span><br><span class="line">        border: 1px solid #000;</span><br><span class="line">        margin-bottom: 5px;</span><br><span class="line">        padding: 5px;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .box-line &#123;</span><br><span class="line">        width: 2px;</span><br><span class="line">        height: 20px;</span><br><span class="line">        background: #000;</span><br><span class="line">        margin-left: 2px;</span><br><span class="line">        margin-top: 1px;</span><br><span class="line">        animation: line 1s infinite;</span><br><span class="line">        transform: translate(2px, 3px);</span><br><span class="line">        display: inline-block;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .box-input &#123;</span><br><span class="line">        display: inline;</span><br><span class="line">        width: 450px;</span><br><span class="line">        word-wrap: break-word;</span><br><span class="line">        overflow: hidden</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @keyframes line &#123;</span><br><span class="line"></span><br><span class="line">        0%,</span><br><span class="line">        100% &#123;</span><br><span class="line">            opacity: 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        50% &#123;</span><br><span class="line">            opacity: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/26/2023-09-26/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1234,6 +1152,127 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/createblog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WU Jinpeng">
+      <meta itemprop="description" content="从安的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从安的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/04/createblog/" class="post-title-link" itemprop="url">搭建博客-基于Hexo</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-04 16:52:16" itemprop="dateCreated datePublished" datetime="2022-06-04T16:52:16+08:00">2022-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-07 20:24:37" itemprop="dateModified" datetime="2022-07-07T20:24:37+08:00">2022-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/06/04/createblog/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/06/04/createblog/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一直想搭建一个个人博客，由于种种原因没有动手。恰好这个端午节放假，下雨又遇见各地疫情不能出去嗨，闲着无聊也是无聊，想着不如把博客搞了吧。于是就这样开始。</p>
+<p>起初以为搭建博客跟做网页一样呢，需要前后端环境以及部署环境，然后我就在网上逛了一下，看看大家都是如何开发博客的，才发现原来有很多现成的博客模板以及脚手架，大致看了一下，有各种语言开发的。由于我个人对node熟悉一点以及网上hexo的资料多一点，对比了一下于是选择了hexo来进行开发。</p>
+<h3 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h3><p>Hexo是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。即把用户的markdown文件，按照指定的主题解析成静态网页。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><pre><code>* 不需要服务器，github免费提供的托管服务
+* 不需要域名，github同样提供了一个.io的域名
+* 不用自己写xml、hexo提供了很多开源的博客模板
+* 便于维护更新，换风格直接换模板就行
+</code></pre>
+<h3 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h3><h4 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h4><p>安装使用hexo之前需要先安装Node.js和Git<br>这两个是程序员常用工具就贴一下安装地址吧，不多累述</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x86.msi">https://nodejs.org/dist/v4.2.3/node-v4.2.3-x86.msi</a><br><a target="_blank" rel="noopener" href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x64.msi">https://nodejs.org/dist/v4.2.3/node-v4.2.3-x64.msi</a><br><a href="Git-2.11.0.3-32-bit.exe">安装git</a><br><a href="Git-2.11.0.3-64-bit.exe">安装git</a></p>
+<hr>
+<p>这样我们的基础环境就搭建好呐，然后可以通过命令行来查看安装的版本。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/04/createblog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1305,7 +1344,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
