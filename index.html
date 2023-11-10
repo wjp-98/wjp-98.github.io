@@ -182,6 +182,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/10/2023-11-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jinpeng">
+      <meta itemprop="description" content="从安的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从安的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/10/2023-11-10/" class="post-title-link" itemprop="url">了解SSE和WebSocket</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-11-10 20:47:48 / 修改时间：21:32:50" itemprop="dateCreated datePublished" datetime="2023-11-10T20:47:48+08:00">2023-11-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/10/2023-11-10/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/10/2023-11-10/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="SSE介绍"><a href="#SSE介绍" class="headerlink" title="SSE介绍"></a>SSE介绍</h3><h4 id="什么是SSE"><a href="#什么是SSE" class="headerlink" title="什么是SSE"></a>什么是SSE</h4><p>Server-Sent Events（SSE）是一种用于实现服务器向客户端实时推送数据的Web技术。与传统的轮询和长轮询相比，SSE提供了更高效和实时的数据推送机制。<br>SSE基于HTTP协议，允许服务器将数据以事件流（Event Stream）的形式发送给客户端。客户端通过建立持久的HTTP连接，并监听事件流，可以实时接收服务器推送的数据。</p>
+<h4 id="SSE的主要特点"><a href="#SSE的主要特点" class="headerlink" title="SSE的主要特点"></a>SSE的主要特点</h4><ol>
+<li>简单易用：SSE使用基于文本的数据格式，如纯文本、JSON等，使得数据的发送和解析都相对简单。</li>
+<li>单向通信：SSE支持服务器向客户端的单向通信，服务器可以主动推送数据给客户端，而客户端只能接收数据。</li>
+</ol>
+<h4 id="SSE的简单实现"><a href="#SSE的简单实现" class="headerlink" title="SSE的简单实现"></a>SSE的简单实现</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">node</span><br><span class="line">// 引入相关模块</span><br><span class="line">const http = require(&#x27;http&#x27;);</span><br><span class="line"></span><br><span class="line">// 创建 HTTP 服务器</span><br><span class="line">const server = http.createServer((req, res) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    // 设置跨域响应头</span><br><span class="line">    res.setHeader(&#x27;Access-Control-Allow-Origin&#x27;, &#x27;*&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Content-Type&#x27;, &#x27;text/event-stream&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Cache-Control&#x27;, &#x27;no-cache&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Connection&#x27;, &#x27;keep-alive&#x27;);</span><br><span class="line"></span><br><span class="line">    res.status = 200;</span><br><span class="line">    res.respond = false;</span><br><span class="line"></span><br><span class="line">    let sentText = &#x27;这一段很长的文本，主要用来测试sse技术的实施，这一段很长的文本，主要用来测试sse技术的实施&#x27;</span><br><span class="line"></span><br><span class="line">    let count = 0;</span><br><span class="line">    const interval = setInterval(() =&gt; &#123;</span><br><span class="line">        const data = &#123; message: sentText[count] &#125;;</span><br><span class="line">        const eventData = `data: $&#123;JSON.stringify(data)&#125;\n\n`;</span><br><span class="line">        res.write(eventData);</span><br><span class="line">        if (count &gt;= sentText.length) &#123;</span><br><span class="line">            count = 0;</span><br><span class="line">            clearInterval(interval);</span><br><span class="line">            res.end();</span><br><span class="line">        &#125;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;, 500);</span><br><span class="line"></span><br><span class="line">    // 监听连接关闭事件，清除定时器</span><br><span class="line">    res.on(&#x27;close&#x27;, () =&gt; &#123;</span><br><span class="line">        count = 0;</span><br><span class="line">        clearInterval(interval);</span><br><span class="line">    &#125;);</span><br><span class="line">// 引入相关模块</span><br><span class="line">const http = require(&#x27;http&#x27;);</span><br><span class="line"></span><br><span class="line">// 创建 HTTP 服务器</span><br><span class="line">const server = http.createServer((req, res) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    // 设置跨域响应头</span><br><span class="line">    res.setHeader(&#x27;Access-Control-Allow-Origin&#x27;, &#x27;*&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Content-Type&#x27;, &#x27;text/event-stream&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Cache-Control&#x27;, &#x27;no-cache&#x27;);</span><br><span class="line">    res.setHeader(&#x27;Connection&#x27;, &#x27;keep-alive&#x27;);</span><br><span class="line"></span><br><span class="line">    res.status = 200;</span><br><span class="line">    res.respond = false;</span><br><span class="line"></span><br><span class="line">    let sentText = &#x27;这一段很长的文本，主要用来测试sse技术的实施，这一段很长的文本，主要用来测试sse技术的实施&#x27;</span><br><span class="line"></span><br><span class="line">    let count = 0;</span><br><span class="line">    const interval = setInterval(() =&gt; &#123;</span><br><span class="line">        const data = &#123; message: sentText[count] &#125;;</span><br><span class="line">        const eventData = `data: $&#123;JSON.stringify(data)&#125;\n\n`;</span><br><span class="line">        res.write(eventData);</span><br><span class="line">        if (count &gt;= sentText.length) &#123;</span><br><span class="line">            count = 0;</span><br><span class="line">            clearInterval(interval);</span><br><span class="line">            res.end();</span><br><span class="line">        &#125;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;, 500);</span><br><span class="line"></span><br><span class="line">    // 监听连接关闭事件，清除定时器</span><br><span class="line">    res.on(&#x27;close&#x27;, () =&gt; &#123;</span><br><span class="line">        count = 0;</span><br><span class="line">        clearInterval(interval);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 启动服务器</span><br><span class="line">server.listen(3000, () =&gt; &#123;</span><br><span class="line">    console.log(&#x27;Server is listening on port 3000&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 启动服务器</span><br><span class="line">server.listen(3000, () =&gt; &#123;</span><br><span class="line">    console.log(&#x27;Server is listening on port 3000&#x27;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/10/2023-11-10/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/26/2023-09-26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1152,127 +1260,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/createblog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jinpeng">
-      <meta itemprop="description" content="从安的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="从安的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/04/createblog/" class="post-title-link" itemprop="url">搭建博客-基于Hexo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-04 16:52:16" itemprop="dateCreated datePublished" datetime="2022-06-04T16:52:16+08:00">2022-06-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-07 20:24:37" itemprop="dateModified" datetime="2022-07-07T20:24:37+08:00">2022-07-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/06/04/createblog/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/06/04/createblog/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一直想搭建一个个人博客，由于种种原因没有动手。恰好这个端午节放假，下雨又遇见各地疫情不能出去嗨，闲着无聊也是无聊，想着不如把博客搞了吧。于是就这样开始。</p>
-<p>起初以为搭建博客跟做网页一样呢，需要前后端环境以及部署环境，然后我就在网上逛了一下，看看大家都是如何开发博客的，才发现原来有很多现成的博客模板以及脚手架，大致看了一下，有各种语言开发的。由于我个人对node熟悉一点以及网上hexo的资料多一点，对比了一下于是选择了hexo来进行开发。</p>
-<h3 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h3><p>Hexo是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。即把用户的markdown文件，按照指定的主题解析成静态网页。</p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><pre><code>* 不需要服务器，github免费提供的托管服务
-* 不需要域名，github同样提供了一个.io的域名
-* 不用自己写xml、hexo提供了很多开源的博客模板
-* 便于维护更新，换风格直接换模板就行
-</code></pre>
-<h3 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h3><h4 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h4><p>安装使用hexo之前需要先安装Node.js和Git<br>这两个是程序员常用工具就贴一下安装地址吧，不多累述</p>
-<hr>
-<p><a target="_blank" rel="noopener" href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x86.msi">https://nodejs.org/dist/v4.2.3/node-v4.2.3-x86.msi</a><br><a target="_blank" rel="noopener" href="https://nodejs.org/dist/v4.2.3/node-v4.2.3-x64.msi">https://nodejs.org/dist/v4.2.3/node-v4.2.3-x64.msi</a><br><a href="Git-2.11.0.3-32-bit.exe">安装git</a><br><a href="Git-2.11.0.3-64-bit.exe">安装git</a></p>
-<hr>
-<p>这样我们的基础环境就搭建好呐，然后可以通过命令行来查看安装的版本。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/04/createblog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1344,7 +1331,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1404,12 +1391,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">33k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">25 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
